@@ -1,7 +1,7 @@
 const inputTag = document.querySelectorAll("input")
 
 inputTag.forEach(function (tag) {
-    inputTag.setAttribute("class","form-control")
+    tag.setAttribute("class","form-control")
 })
 
 const select = document.querySelector("select")

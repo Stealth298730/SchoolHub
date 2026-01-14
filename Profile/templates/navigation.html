@@ -1,18 +1,20 @@
+{% with request.resolver_match.url_name as url_name %}
 <li class="nav-item">
-    <a class="nav-link active" href="{% url 'index' %}">SchoolHUB</a>
+    <a class="nav-link {% if url_name == 'index' %} active {% endif %}" aria-current="true" href="{% url 'index' %}">SchoolHUB</a>
 </li>
 {% if request.user.is_authenticated %}
 <li class="nav-item">
-        <a class="nav-link" href="{% url 'profile' %}">Профіль</a>
+    <a class="nav-link {% if url_name == 'profile' %} active {% endif %}" aria-current="true" href="{% url 'profile' %}">Профіль</a>
 </li>
 <li class="nav-item">
-        <a class="nav-link" href="{% url 'logout_view' %}">Вихід</a>
+    <a class="nav-link {% if url_name == 'logout_view' %} active {% endif %}" aria-current="true" href="{% url 'logout_view' %}">Вихід</a>
 </li>
 {% else %}
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'sign_in' %}">Вхід</a>
+    <a class="nav-link {% if url_name == 'sign_in' %} active {% endif %}" aria-current="true" href="{% url 'sign_in' %}">Вхід</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'sign_up' %}">Зареєструватися</a>
+    <a class="nav-link {% if url_name == 'sign_up' %} active {% endif %}" aria-current="true" href="{% url 'sign_up' %}">Зареєструватись</a>
 </li>   
 {% endif %}
+{% endwith %}

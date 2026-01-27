@@ -27,6 +27,7 @@ class Position(models.Model):
 
     def __str__(self):
         return f"Посада:{self.name}|Дії:{','.join([action.name for action in self.actions.all()])}"
+    
 
 
 class Subject(models.Model):
@@ -35,6 +36,7 @@ class Subject(models.Model):
     def __str__(self):
         return f"Назва предмету:{self.name}"
     
+
 class ClassRoom(models.Model):
     name = models.TextField(max_length=30,verbose_name="Назва класу")
     description = models.CharField(max_length=255,verbose_name="Опис класу",default=None,null=True,blank=True)
@@ -43,10 +45,11 @@ class ClassRoom(models.Model):
     def __str__(self):
         return f"{self.name} клас"
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    position = models.ManyToManyField(Position,null=True,blank=True,default=None)
-    class_room = models.ForeignKey(ClassRoom,on_delete=models.CASCADE,null=True,default=None)
+    positions = models.ManyToManyField(Position,null=True,blank=True,default=None)
+    class_room = models.ForeignKey(ClassRoom,on_delete=models.CASCADE,null=True,default=None,blank=True)
     avatar = models.ImageField(upload_to=".",verbose_name="Аватарка",null=True,blank=True,default=None)
     bio = models.TextField(verbose_name="Про себе",null=True,blank=True,default=None,help_text="біографія")
     phone_number = models.CharField(max_length=20,null=True,blank=True,default=None,verbose_name="Номер телефону",help_text="Введіть номер телефону")

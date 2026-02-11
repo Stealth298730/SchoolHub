@@ -1,15 +1,20 @@
+import locale
+from datetime import datetime
+
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
 from django.http import HttpRequest
+from django.db.models import Q
 
 from .models import Profile,Action,Position,Subject
 from .forms import ActionForm,PositionForm,UserForm,UserFormEdit,SignInForm,SubjectForm,ProfileForm
-
+from TaskManager.models import Schedule
 # Create your views here.
 
+locale.setlocale(locale.LC_TIME, 'ukrainian')
 
 def sign_up(request:HttpRequest):
     if request.method == "POST":
@@ -75,7 +80,19 @@ def update_profile(request:HttpRequest):
 
 @login_required
 def index(request:HttpRequest):
-    return render(request,"index.html")
+    if (User
+        .objects
+        .prefetch_related("Profile")
+        .select_related("Position")
+        .filter(username=request.user.username, profile__positions__name__in=["Учень","Вчитель"])
+        .exists()):
+        class_number = int(request.user.profile.class_room.name.split("-")[0])
+        day = datetime.now().strftime("%A").title()
+
+
+        task = Schedule.objects.filter(day=day,study=class_number)
+        return render(request,"index.html",dict(task=task))
+    return render(request,"index.html",) 
 
 
 @login_required

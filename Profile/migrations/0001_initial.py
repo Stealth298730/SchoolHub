@@ -52,13 +52,13 @@ class Migration(migrations.Migration):
                 ('bio', models.TextField(blank=True, default=None, help_text='біографія', null=True, verbose_name='Про себе')),
                 ('phone_number', models.CharField(blank=True, default=None, help_text='Введіть номер телефону', max_length=20, null=True, verbose_name='Номер телефону')),
                 ('class_room', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='Profile.classroom')),
-                ('positions', models.ManyToManyField(blank=True, default=None, null=True, to='Profile.position')),
+                ('positions', models.ManyToManyField(blank=True, default=None, to='Profile.position')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='classroom',
             name='subjects',
-            field=models.ManyToManyField(blank=True, default=None, null=True, to='Profile.subject', verbose_name='Список предметів'),
+            field=models.ManyToManyField(blank=True, default=None,  to='Profile.subject', verbose_name='Список предметів'),
         ),
     ]

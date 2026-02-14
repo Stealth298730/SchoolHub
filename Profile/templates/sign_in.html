@@ -1,10 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}Вхід{% endblock title %}
 {% block content %}
-<form method = "post">
-    {% csrf_token %}
-    {{ form.as_p}}
-    <button class="btn btn-primary">Вхід</button>
-</form>
-{% endblock content %}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4" style="width: 400px;">
+        <h3 class="card-title text-center mb-3">Увійти</h3>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" action="{% url 'sign_in' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Логін</label>
+                <input type="text" class="form-control" id="id_username" name="username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Пароль</label>
+                <input type="password" class="form-control" id="id_password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Увійти</button>
+        </form>
+
+        <p class="text-center mt-3">
+            Ще немає акаунту? 
+            <a href="{% url 'sign_up' %}">Зареєструватися</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

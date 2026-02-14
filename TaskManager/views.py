@@ -52,7 +52,7 @@ def edit_schedule(request:HttpRequest,id:int):
     form = ScheduleForm(data=request.POST or None,instance=schedule)
     if request.method == "POST" and form.is_valid():
         form.save()
-        messages.SUCCESS(request,"Дані про урок успішно оновлено 👌")   
+        messages.success(request,"Дані про урок успішно оновлено 👌")   
         return redirect("schedule_view")
     
 

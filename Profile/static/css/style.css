@@ -1,0 +1,43 @@
+.page {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: pageFade 0.5s ease forwards;
+}
+
+@keyframes pageFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+
+body.light-theme {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+body.light-theme .card {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+
+body.dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-theme .card {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-theme .btn-outline-secondary {
+    border-color: #bbb;
+    color: #fff;
+}

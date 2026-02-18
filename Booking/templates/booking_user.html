@@ -1,10 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Бронювання кабінету</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_div }}
-    <button type = "submit" class = "btn btn-primary">Забронювати</button>
-</form>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+                    
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold text-primary">
+                            📅 Бронювання кабінету
+                        </h2>
+                        <p class="text-muted mb-0">
+                            Оберіть дату, час та кабінет
+                        </p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            {{ form.as_p }}
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-3">
+                                Забронювати
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock content %}

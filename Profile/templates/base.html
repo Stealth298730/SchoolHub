@@ -4,39 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <title>{% block title %}SchoolHUB{% endblock title %}</title>
 </head>
-<body>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        {% if message.tags == "success" %}
-            <li class="alert alert-success" role="alert">
-                {{ message }}
-            </li>
-        {% endif %}
-        {% if message.tags == "error" %}
-            <li class="alert alert-danger" role="alert">
-                {{ message }}
-            </li>
-        {% endif %}
-        {% endfor %}
-    </ul>
-    {% endif %}
 
-<div class="card text-center">
-  <div class="card-header">
-    <ul class="nav nav-pills card-header-pills">
-      {% include "navigation.html"%}
-    </ul>
-  </div>
-  <div class="card-body">
-      {% block content%}
-      {% endblock content%}
-  </div>
+
+<body class="page-transition {% if request.session.theme == 'dark' %}dark-theme{% else %}light-theme{% endif %}">
+
+{% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
 </div>
-<script src = "{% static 'js/input.js' %}"></script>
+{% endif %}
+
+<div class="container mt-4">
+
+    <div class="card shadow-lg rounded-4 main-card 
+            animate__animated animate__fadeInUp">
+
+        <div class="card-header bg-white border-0">
+            <ul class="nav nav-pills justify-content-center">
+                {% include "navigation.html"%}
+
+                <li class="nav-item ms-3">
+                    <form method="post" action="{% url 'toggle_theme' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                            {% if request.session.theme == 'dark' %}Світла тема{% else %}Темна тема{% endif %}
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body page-content">
+            {% block content %}
+            {% endblock content %}
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/input.js' %}"></script>
 </body>
 </html>

@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-інформація про наступне заняття та місце проведення {{task}}
+<div class="container mt-4">
+    <h3>Інформація про наступне заняття</h3>
+
+    {% if task %}
+        <div class="card mt-3">
+            {% for t in task %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ t.subject.name }}</h5>
+                    <p class="card-text">
+                        Урок: {{ t.number }}<br>
+                        Кабінет: {{ t.resource }}<br>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>На сьогодні немає запланованих уроків.</p>
+    {% endif %}
+</div>
 {% endblock content %}

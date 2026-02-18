@@ -61,12 +61,17 @@ def edit_schedule(request:HttpRequest,id:int):
 
 
 has_permission("CS")
-def remove_schedule(request:HttpRequest,id:int):
+def remove_schedule(request: HttpRequest, id: int):
     schedule = Schedule.objects.filter(id=id).first()
     if not schedule:
-        messages.error(request, f"Такий урок не знайдено😥")
+        messages.error(request, "Такий урок не знайдено 😥")
+        return redirect("schedule_view")
+    
+    # Перевірка ролі користувача
+    if request.user.profile.positions.filter(name="Учень").exists():
+        messages.error(request, "У вас недостатньо прав для видалення цього уроку ❌")
         return redirect("schedule_view")
     
     schedule.delete()
-    messages.success(request,f"{schedule} успішно видалено")
+    messages.success(request, f"{schedule} успішно видалено ✅")
     return redirect("schedule_view")
